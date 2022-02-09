@@ -1,0 +1,9 @@
+1) Divide and Conquer algorithm
+2) Recursive Algorithm
+3) Uses a pivot element to partition the array into two parts
+4) Elements < pivot to its left, Elements > pivot to its right
+5) Pivot will be then in its correct sorted position
+6) Process is now repeated from the left array & right array
+7) Eventually, every element has been the pivot, so every element will be in its correct sorted position
+8) As with merge sort, we'll end up partioning the array into a series of 1-element arrays
+9) Does this in-place (unlike merge sort)

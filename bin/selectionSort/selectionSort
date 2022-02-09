@@ -1,0 +1,57 @@
+20	35	-15	7	55	1	-22
+
+lastUnsortedndex = 6 - this is the last index of the unsorted partition
+i = 1 - index used to traverse the array from left to right
+largest = 0 - index of largest element in unsorted partition  
+
+20	35	-15	7	55	1	-22
+largest = 1
+i = 2
+
+20	35	-15	7	55	1	-22
+largest = 1
+i = 3
+
+20	35	-15	7	55	1	-22
+largest = 1
+i = 4
+
+20	35	-15	7	55	1	-22
+largest = 4
+i = 5
+
+20	35	-15	7	-22	1	55
+largest = 4
+i = 6
+
+
+lastUnsortedndex = 5 - this is the last index of the unsorted partition
+i = 1 - index used to traverse the array from left to right
+largest = 0 - index of largest element in unsorted partition  
+
+20	35	-15	7	-22	1	55
+largest = 0
+i = 1
+
+20	35	-15	7	-22	1	55
+largest = 1
+i = 2
+
+20	35	-15	7	-22	1	55
+largest = 1
+i = 3
+
+20	35	-15	7	-22	1	55
+largest = 1
+i = 4
+
+20	35	-15	7	-22	1	55
+largest = 1
+i = 5
+
+20	1	-15	7	-22	35	55
+
+-- In-place algorithm
+-- O(n^2) time complexity - quadratic
+-- It will take 100 steps to sort 10 items, 10,000 steps to sort 100 items and continue.
+-- Unstable algorithm

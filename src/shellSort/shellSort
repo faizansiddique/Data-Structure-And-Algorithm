@@ -1,0 +1,75 @@
+1) Variation of Insertion sort
+2) Insertion sort chooses which element to insert using a gap of 1
+3) Shell sort starts out using a larger gap value
+4) As the algorithm runs, the gap is reduce
+5) Goal is to reduce the amount of shifting required
+6) As the algorithm progressess, the gap is reduces
+7) The last gap value is always 1
+8) A gap value of 1 is equivalent to insertion sort
+9) So, the algorithm does same preliminary work (using gap value greater than 1), and then become insertion sort
+10) By the time we get to insertion sort, the array has been partially sorted. So there's less shifting required  
+
+
+20	35	-15	7	55	1	-22
+Here we'll base our gap on the array's length. we'll initialize the gap (or interval) to array.length/2
+On each iteration, we'll divide the gap value by 2 to get the next gap value
+For our array, the gap will be initialize to 3
+On the next iteration, it will be 1 - insertion sort 
+
+20	35	-15	7	55	1	-22
+i = gap = 3
+j = i = 3
+newElement = intArray[i] = 7
+compare intArray[j-gap] with newElement
+
+20	35	-15	20	55	1	-22
+i = gap = 3
+j = j-gap = 0
+newElement = intArray[i] = 7
+
+7	35	-15	20	55	1	-22
+i = 4
+j = i = 4
+newElement = intArray[i] = 55
+compare intArray[j-gap] with newElement
+Nothing to do because 35 < 55
+
+7	35	-15	20	55	1	-22
+i = 5
+j = i = 5
+newElement = intArray[i] = 1
+compare intArray[j-gap] with newElement
+Nothing to do because -15 < 1
+
+7	35	-15	20	55	1	-22
+i = 6
+j = i = 6
+newElement = intArray[i] = -22
+compare intArray[j-gap] with newElement
+Here -22 < 20
+
+7	35	-15	20	55	1	20
+i = 6
+j = j - gap = 3
+newElement = intArray[i] = -22
+compare intArray[j-gap] with newElement
+
+7	35	-15	7	55	1	20
+i = 6
+j = j-gap = 0
+newElement = intArray[i] = -22
+compare intArray[j-gap] with newElement
+
+-22	35	-15	7	55	1	20
+
+We have completed the iteration with gap = 3
+Notice how the array is more sorted
+we have moved -22 to the front of the array 
+we have also move 20 closer to the sorted position
+Now we update the gap (gap/2)
+The gap will become 1, we are switching to insertion sort
+In-place algorithm
+Difficult to nail down the time complexity because it will depend on the gap.
+Worst case: O(n^2) but it can perform much better than that
+Doesn't required as much shifting as insertion sort, so it usually perform better
+Unstable algorithm

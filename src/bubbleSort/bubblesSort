@@ -1,0 +1,5 @@
+1) In-place algorithm
+   we are logically partitioning the array. Here we are not creating another array in order to perform sort 
+2) O(n^2) time complexity - quadratic
+3) It will take 100 steps to sort 10 items, 10,000 steps to sort 100 items and more.
+4) Algorithm degrades quickly   

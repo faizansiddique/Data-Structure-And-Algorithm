@@ -1,0 +1,110 @@
+1) Divide and Conquer algorithm
+2) Recursive Algorithm
+3) Two Phases: Splitting and Merging
+4) Splitting phase leads to faster sorting during the merging phase
+5) Splitting is logical. We don't create new arrays 
+
+SPLITTING PHASE
+1) Start with an unsorted array
+2) Divide the array into two arrays, which are unsorted. The first array is the left array & the second array is the right array
+3) split the left & right array into two arrays each
+4) keep splitting until all the arrays have only one element each - these arrays are sorted
+
+MERGING PHASE
+1) Merge every left/right pair of sibling arrays into a sorted array
+2) After the first merge, we'll have a bunch of 2-element sorted array
+3) Then merge those sorted array(left/right siblings) to end up with a bunch of 4-element sorted array
+4) Repeat until you have a single sorted arrays
+5) Not in-place. Uses temporary arrays
+
+SPLITTING PROCESS
+20	35	-15	7	55	1	-22
+start = 0, end = 7 (array.length)
+midpoint = (start+end)/2 = 3
+Elements 0 to 2 will go into the left array, and elements 3 to 6 will go into the right array
+
+20	35	-15	7	55	1	-22
+start = 0, end = 3
+midpoint = (start+end)/2 = 1
+Elements 0 to 0 will go into the left array, and elements 1 to 2 will go into the right array
+We have completed the split of the left array into 1-element arrays
+
+20	35	-15	7	55	1	-22
+start = 3, end = 7
+midpoint = (start+end)/2 = 5
+Elements 3 to 4 will go into the left array, and elements 5 to 6 will go into the right array
+
+20	35	-15	7	55	1	-22
+start = 3, end = 5
+midpoint = (start+end)/2 = 4
+Elements 3 to 3 will go into the left array, and elements 4 to 4 will go into the right array
+
+20	35	-15	7	55	1	-22
+start = 5, end = 7
+midpoint = (start+end)/2 = 6
+Elements 5 to 5 will go into the left array, and elements 6 to 6 will go into the right array
+
+We have completed the splitting phase
+35 & -15 are in sibling left/right arrays
+7 & 55 are in sibling left/right arrays
+1 & -22 are in sibling left/right arrays
+Every left/right array is sorted (consist of 1 element)
+
+MERGING PROCESS
+1) We merge sibling left and right arrays
+2) We create a temporary array large enough to hold all the elements in the arrays we are merging
+3) We set i to the first index of left array and j to the first index of the right array
+4) We compare left[i] to right[j]. If left is smaller we copy it to the temp array & increment i by 1.
+If right is smaller we copy it to the temp & increment j by 1
+5) We repeat this process until all element in the two arrays have been processed
+6) At this point, the temp array contains the merged value in sorted order
+7) We then copy this temp array back to the original input array at the correct position
+8) If left array is at position x to y, and right array is at position y+1 to z will be sorted in the original array
+
+20	35	-15	7	55	1	-22
+start by merging the two siblings on the left (35 & -15)
+We'll create a temp 2-element array
+i will be initialized to 1 & j to 2
+we compare array[i] to array[j]. -15 < 35, so we copy it to the temp array
+Then we copy 35 to the temp array
+At this point, temp array is {-15, 35}
+We now copy this temp array back into positions 1 & 2 in the original array
+
+20	-15	35	7	55	1	-22
+The two sibling arrays have now been merged
+We've gone from 3 arrays on the left to two and both arrays are sorted
+Now {20} array has a sibling {-15, 35}, so we merge them
+We create a temp array of length 3
+i will be initialize to 0 & j to 1
+We compare array[i] to array[j]. -15 < 20, so it copied to the temp array & j is increment by 1
+Now 20 < 35, so it will be copied next
+Only 35 remains, so it's copied last
+The temp array is {-15, 20, 35}
+We copy temp array back to positions 0 to 2 in the original array
+
+-15	20	35	7	55	1	-22
+We have completed merging the left array
+Now we'll repeat the process with the right array
+We have 2 sibling sets: 7 & 55, 1 & -22
+After doing all the merging of right array
+
+-15	20	35	-22	1	7	55
+All that remains now is to merge the final left & right arrays
+We create a temp array for 7 elements
+i is initialize to 0 & j = 3
+-22 < -15, so we copy -22 to the temp array & increment j to 4 {-22}
+-15 < 1, so we copy -15 to the temp array & increment i to 1 {-22, -15}
+1 < 20, so we copy 1 to the temp array & increment j to 5 {-22, -15, 1}
+7 < 20, so we copy 7 to the temp array & increment j to 6 {-22, -15, 1, 7}
+20 < 55, so we copy 20 to the temp array & increment i to 2 {-22, -15, 1, 7, 20}
+35 < 55, so we copy 35 to the temp array & increment i to 3 {-22, -15, 1, 7, 20, 35}
+Only 55 left. we copy it to the temp array
+We now copy the temp array back into positions 0 to 6 of the original array
+The array is sorted 
+The implementation has a couple of optimizations
+ 
+-22	-15	1	7	20	35	55
+
+Not in-place algorithm
+O(nlogn) -base 2. We're repeatedly dividing the array in half during the splitting phase
+Stable algorithm
