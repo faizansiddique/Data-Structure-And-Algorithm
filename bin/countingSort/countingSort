@@ -1,0 +1,53 @@
+Makes assumptions about the data
+Doesn't use comparison
+Counts the number of occurrences of each value
+Only work with non-negative discrete values (can't work with float and string)
+Values must be within a specific range
+
+2	5	9	8	2	8	7	10	4	3
+
+1) Assume we have values between 1 & 10 inclusively
+2) We have 10 possible values, so we create counting array of length 10
+3) Traverse the input array from left to right
+4) Use the counting array to track how many of each value are in the input array
+5) Using the counts in the counting array, write the values in sorted order to the input array
+
+2	5	9	8	2	8	7	10	4	3
+
+i = 0:
+0	1	0	0	0	0	0	0	0	0
+
+i = 1:
+0	1	0	0	1	0	0	0	0	0
+
+i = 2:
+0	1	0	0	1	0	0	0	1	0
+
+i = 3:
+0	1	0	0	1	0	0	1	1	0
+
+i = 4:
+0	2	0	0	1	0	0	1	1	0
+
+i = 5:
+0	2	0	0	1	0	0	2	1	0
+
+i = 6:
+0	2	0	0	1	0	1	2	1	0
+
+i = 7:
+0	2	0	0	1	0	1	2	1	1
+
+i= 8:
+0	2	0	1	1	0	1	2	1	1
+
+i =9:
+0	2	1	1	1	0	1	2	1	1
+
+Now we write back to the original input array
+0	2	1	1	1	0	1	2	1	1
+2	2	3	4	5	7	8	8	9	10
+
+Not an in-place algorithm
+O(n) - can achieve this because we are making assumptions about the data we're sorting
+If we want tje sort to be stable, we have to do some extra steps     

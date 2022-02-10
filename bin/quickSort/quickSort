@@ -7,3 +7,56 @@
 7) Eventually, every element has been the pivot, so every element will be in its correct sorted position
 8) As with merge sort, we'll end up partioning the array into a series of 1-element arrays
 9) Does this in-place (unlike merge sort)
+
+20	35	-15	7	55	1	-22
+Pivot will be the first element in the array(or subarray)
+start = 0, i = start
+end = 7, j = end
+pivot = 20 (array[start])
+
+We start with --j and go from right to left, looking for the first element thats less than the pivot element
+-22 < pivot element, so we assign it to position i, which is 0
+
+j = 6 
+-22	35	-15	7	55	1	-22
+(20 is stored in pivot)
+Now we switch to i, we start with i++ and go from left to right, looking for the first element thats greater than the pivot
+35 > pivot element, so we assign it to position j which is 6, i = 1
+ 
+-22	35	-15	7	55	1	35
+Notice how we have not lost any data, because we know we have already moved whatever was at position 6
+By alternating between going from right to left and left to right, we can be sure we won't lose any values
+Now we check whether the values of i & j have crossed each other. If i < j they haven't so we switch back to j and 
+look for the first element that's less than the pivot
+
+i = 1
+j = 6
+We check the element at --j, which is position 5
+1 < pivot, so we assign it to position i
+
+i = 1
+j = 5
+Notice once again that we have not lost any data, because we have already moved 35 from position 1
+Now we switch to i & look for the first element greater than the pivot
+This will take us all the way to 55
+
+-22	1	-15	7	55	1	35
+At this point, we assign 55 to position j, which is 5
+-22	1	-15	7	55	55	35
+Once again no data is lost. We have already moved the value 1 from position 5
+
+At this point, i = 4 & j = 5
+We switch to j & look for the first element that's less than the pivot. 
+We find it at position 3 but j has now crossed i. So we don't do anything. we stop.
+At this point, the value of i will be the sorted position of the pivot value (20)
+So we assign 20 to position 4
+
+-22	1	-15	7	20	55	35
+Notice that everything to the left of 20 is smaller than 20, and everything to the right of 20 is larger
+than 20
+Now we repeat this process for the left partition and the right partition
+We do this until the entire array is sorted
+
+In-place algorithm
+O(nlogn) - base 2.we are repeatedly partitioning the array into two halves
+Unstable algorithm

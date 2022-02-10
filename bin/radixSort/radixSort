@@ -1,0 +1,147 @@
+Makes assumptions about the data
+Data must have same radix and width
+Because of this, data must be integers or strings
+Sort based on each individual digit or letter position
+Start at the rightmost position
+Must use a stable sort algorithm at each stage
+
+4725	4586	1330	8792	1594	5729
+
+First we will sort this array based on the 1'st position
+1330	8792	1594	4725	4586	5729
+
+Now we will sort this array based on the 10'th position
+4725	5729	1330	4586	8792	1594
+
+Now we will sort this array based on the 100's position
+1330	4586	1594	4725	5729	8792
+
+Now sort this array based on the 1000's position - must be a stable sort!
+1330	1594	4586	4725	5729	8792
+
+Counting sort is often used as the sort algorithm for radix sort - must be stable counting sort
+O(n) - can achieve this because we are making assumptions about the data we're sorting
+Even so, it often runs slower than O(nlogn) algorithms because of the overhead involved
+In-place depends on which sort algorithm use
+Stable algorithm
+
+STABLE COUNTING SORT
+Required extra steps
+can calculate where values should be written back to the original array
+writing the values into the array in backwards order ensuring stability
+
+1330	8792	1594	4725	4586	5729
+we'll sort this array based on the 10's position - must be a stable sort!
+
+	1594 must remain after 8792
+	5729 must remain after 4725
+We do the counting as we did before
+We'll end up with the counting array below,
+0	0	2	1	0	0	0	0	1	2
+
+We create a temp array that matches the length of the array we're sorting
+We can use the counts to figure out which range of indices in the temp array will 
+be occupied by each value. for eg, we can figure out that the two values with '2'
+in the 10's position will occupy indices 0 & 1 in the temp array. The value with
+'3' in the 10's position will occupy index 2. The value with 8 in the 10's position
+will occupy index 3. The value with 9 in the 10's position will occupy 4 & 5.
+
+After the first pass, we adjust the counts. Instead of the no of values that have specific 10's value,
+we want to store 3 at index 3, because 3 values have a 10's value of 3 or less
+
+We can calculated each adjusted count by adding up the the counts up to and including the 10's value
+1330	8792	1594	4725	4586	5729	
+0	0	2	3	3	3	3	3	4	6
+
+We can use these adjusted counts to write out the values in the correct order & preserve the relative
+positioning of values that have duplicate 10's value
+	int[] tmp = new int[n];
+	for(int k=n-1; k>=0; k--){
+		tmp[--countArray[getDigit(position, input[k], radix)]] = input[k];
+		}
+ 	
+ 	n = length of the input array = 6
+ 	k starts at 5 and goes to 0
+ 
+when k=5;
+ 	countArray[getDigit(...)] = countArray[2] for 5729
+ 	the value at input[k] = 2
+we are using the prefix operator, so we subtract 1 from the countArray[2] = 1
+we then assign input[k] (5729) to temp[1]
+ 
+0	5729	0	0	0	0
+0	0	1	3	3	3	3	3	4	6
+ 
+Temp array now has 5729
+countArray[2] has been decremented by 1, since we've written out one value with 2 in the 10's position
+ 
+when k=4;
+ 	countArray[getDigit(...)] = countArray[8] for 4586
+	the value at input[k] = 4
+we are using the prefix operator, so we subtract 1 from the countArray[8] = 3
+we then assign input[k] (4586) to temp[3]
+ 
+0	5729	0	4586	0	0
+0	0	1	3	3	3	3	3	3	6
+ 
+Temp array now has 4586
+countArray[8] has been decremented by 1, since we've written out one value with 8 in the 10's position
+
+when k=3;
+ 	countArray[getDigit(...)] = countArray[2] for 4725
+	the value at input[k] = 1
+we are using the prefix operator, so we subtract 1 from the countArray[2] = 0
+we then assign input[k] (4725) to temp[0]
+ 
+4725	5729	0	4586	0	0
+0	0	0	3	3	3	3	3	3	6
+ 
+Temp array now has 4725
+countArray[0] has been decremented by 1, since we've written out one value with 2 in the 10's position
+Notice that the relative positions of 4725 & 5729 has been preserved
+
+when k=2;
+ 	countArray[getDigit(...)] = countArray[9] for 1594
+	the value at input[k] = 6
+we are using the prefix operator, so we subtract 1 from the countArray[9] = 5
+we then assign input[k] (1594) to temp[5]
+ 
+4725	5729	0	4586	0	1594
+0	0	3	3	3	3	3	3	3	5
+ 
+Temp array now has 1594
+countArray[9] has been decremented by 1, since we've written out one value with 9 in the 10's position
+
+when k=1;
+ 	countArray[getDigit(...)] = countArray[9] for 8792
+	the value at input[k] = 5
+we are using the prefix operator, so we subtract 1 from the countArray[9] = 4
+we then assign input[k] (8792) to temp[4]
+ 
+4725	5729	0	4586	8792	1594
+0	0	0	3	3	3	3	3	3	4
+ 
+Temp array now has 8792
+countArray[9] has been decremented by 1, since we've written out one value with 9 in the 10's position
+Notice that the relative positions of 8792 & 1594 have been preserved
+
+when k=0;
+ 	countArray[getDigit(...)] = countArray[3] for 1330
+	the value at input[k] = 3
+we are using the prefix operator, so we subtract 1 from the countArray[3] = 2
+we then assign input[k] (1330) to temp[2]
+ 
+4725	5729	1330	4586	8792	1594
+0	0	0	2	3	3	3	3	3	4
+ 
+Temp array now has 1330
+countArray[3] has been decremented by 1, since we've written out one value with 3 in the 10's position
+Now we would copy the temp array into the input array
+
+This work because we traverse the input array from right to left, and we write duplicate values into
+the temp array from right to left
+If we know that duplicate values will go into position 3 & 4, we write the rightmost value in the input
+array into position 4 & the leftmost value in position 3
+This preserves the relative positioning of duplicate values
+By adjusting the counting array, after the initial pass we can map values to indices in the temp array
+can also use linked lists to make counting sort stable	
